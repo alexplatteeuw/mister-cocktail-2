@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: mister_cocktail_2_production
-  username: mister_cocktail_2
+  username:
   password: <%= ENV['MISTER_COCKTAIL_2_DATABASE_PASSWORD'] %>
