@@ -3,7 +3,7 @@ class CocktailsController < ApplicationController
   before_action :find_cocktail, only: [:show, :destroy, :edit, :update]
 
   def index
-    @cocktails = Cocktail.all.sort_by(&:name)
+    @cocktails = Cocktail.all.includes(photo_attachment: :blob).sort_by(&:name)
   end
 
   def new
