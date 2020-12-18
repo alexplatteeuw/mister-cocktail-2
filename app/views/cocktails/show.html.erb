@@ -1,27 +1,28 @@
 
 <div class="container">
-  <div class="card-cocktail-show mt-4" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= @cocktail.photo.attached? ? cl_image_path(@cocktail.photo.key, crop: :fit, width: 1100) : 'https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg' %>)">
+  <div class="card-cocktail-show mt-4" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= @cocktail.photo.attached? ? cl_image_path(@cocktail.photo.key, crop: :fill, width: 1100, height: 124, gravity: :auto, quality: "auto:best") : 'https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg' %>)">
       <h1><%= @cocktail.name %></h1>
   </div>
 
-  <div class="row d-flex flex-row align-items-around bg-white rounded shadow-sm m-0">
+  <div class="row bg-white rounded shadow-sm m-0">
 
-    <div class="col-6 d-flex justify-content-center align-items-center p-0">
-      <div class="d-flex flex-column align-items-center">
-        <h4>Ingrédients</h4>
-        <ul class="text-center list-unstyled">
-          <% @cocktail.doses.includes(:ingredient).each do |dose| %>
-            <li><%= dose.ingredient.name %> - <%= dose.description %> - <%= link_to dose_path(dose), method: :delete, remote: true do %><i class="far fa-trash-alt"></i><% end %></li>
-          <% end %>
-        </ul>
+  <div class="col-md-4 col-sm-12 p-4 border d-flex flex-column justify-content-center">
+    <h4 class="text-left mb-3">Ingrédients</h4>
+    <ul class="text-center list-unstyled flex-grow-1 d-flex justify-content-center align-items-center">
+      <div>
+        <% @cocktail.doses.includes(:ingredient).each do |dose| %>
+          <li><%= dose.ingredient.name %> - <%= dose.description %> - <%= link_to dose_path(dose), method: :delete, remote: true do %><i class="far fa-trash-alt"></i><% end %></li>
+        <% end %>
       </div>
-    </div>
+    </ul>
+  </div>
 
-    <div class="col-6 p-5 ">
+    <div class="col-md-8 col-sm-12 p-4 border">
+      <h4 class="text-left mb-3">Ajoutez un ingrédient</h4>
       <%= simple_form_for [@cocktail, @dose] do |f| %>
-        <%= f.association :ingredient, label: "Ingrédient" %>
+        <%= f.association :ingredient, label: "Ingrédient", input_html: { class: "select2" } %>
         <%= f.input :description %>
-        <%= f.button :submit, 'Ça part !', class: "btn btn-primary btn-sm" %>
+        <%= f.button :submit, 'Ça part !', class: "btn btn-primary btn-sm mt-2 float-right" %>
       <% end %>
     </div>
 

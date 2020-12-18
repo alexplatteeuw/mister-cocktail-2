@@ -7,7 +7,16 @@
   <div class="card-container">
     <% @cocktails.each do |cocktail| %>
       <%= link_to cocktail_path(cocktail) do %>
-        <div class="card-cocktail" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cocktail.photo.attached? ? cl_image_path(cocktail.photo.key, height: 400, width: 400, crop: :fill) : 'https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg' %>)">
+        <div class="card-cocktail" style="
+          background-image: linear-gradient(rgba(0,0,0,0.3), 
+          rgba(0,0,0,0.3)), 
+          url(
+              <% if cocktail.photo.attached? %>
+                <%= cl_image_path(cocktail.photo.key, height: 250, width: 250, crop: :fill, quality: "auto:best") %>
+              <% else %>
+                <%= 'https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg' %>
+              <% end %>
+              )">
           <span><%= cocktail.name %></span>
         </div>
       <% end %>
